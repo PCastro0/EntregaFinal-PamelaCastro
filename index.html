@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <title>ENTREGA FINAL</title>
+</head>
+<body>
+    <div class="nav-container">
+        <nav class="navbar">
+            <h1 class="navbar-logo">Mi Peluquería
+            </h1>
+            <h1 class="ver-carrito" id="verCarrito"> </h1>
+        </nav>
+    </div>
+    <main class="form-pag">
+        <form id="miFormulario" data-aos="zoom-in">
+            <h2 class="form-title">ingresa tus datos</h2>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="nameForm" class="form-label">Nombre:</label> <br>
+                    <input type="text" id="nameForm" class="form-input" placeholder= "  " >
+                    <span class="form-line"></span>
+                </div>
+                <div class="form-group">
+                    <label for="userForm" class="form-label">Usuario:</label> <br>
+                    <input type="text" id="userForm" class="form-input" placeholder= "  " >
+                    <span class="form-line"></span>
+                </div>
+                <div class="form-group">
+                    <label for="emailForm" class="form-label">Email:</label> <br>
+                    <input type="email" id="emailForm" class="form-input" placeholder= "  " >
+                    <span class="form-line"></span>
+                </div>
+                <div class="form-group">
+                    <label for="passwordForm" class="form-label">Contraseña:</label> <br>
+                    <input type="password" id="passwordForm" class="form-input" placeholder= "  " >
+                    <span class="form-line"></span>
+                </div>
+                <button id="sendData">Aceptar</button>
+                
+                <p id="datosGuardadosBien"></p>
+            </div>
+        </form>
+
+        
+
+
+        <div id="shopContent" class="shop-content"></div>
+        <div id="modalContainer" class="modal-container"></div>
+    </main>
+
+
+
+
+
+    <script src="/javascript/main.js"></script>
+</body>
+</html>
