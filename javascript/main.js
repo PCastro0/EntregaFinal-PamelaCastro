@@ -10,6 +10,9 @@ const DatosTerminados = document.getElementById("datosGuardadosBien")
 // nuevos botones
 const nuevobotton = document.getElementById("boton-nuevo")
 const nuevoBoton2 = document.getElementById("boton-nuevo2")
+const shopContent = document.getElementById("shopContent");
+const verCarrito = document.getElementById("verCarrito");
+const modalContainer = document.getElementById("modal-container");
 
 // recupero los datos al cargar la página
 window.onload = function() {
@@ -54,80 +57,124 @@ inputButtonForm.addEventListener("click", function(event){
 });
 
 // creo productos
-const Producto = function(tipo, marca, precio,img) {
+const producto = function(id, tipo, marca, precio, img) {
+    this.id = id;
     this.tipo = tipo;
     this.marca = marca;
     this.precio = precio;
     this.imagen = img;
 }
 
-let producto1 = new Producto("CORTE", "Tendencia 2024","3000 ARS", `../img/corte.jpg` );
-let producto2 = new Producto("PEINADO", "Recogidos & Novias", "7000 ARS", "/img/peinado.jpg");
-let producto3 = new Producto("ALISADO", "Alisados Meth","10000 ARS","/img/alisado.jpg");
-let producto4 = new Producto("TINTURA", "Sin Amoniaco","4500 ARS","./img/tintura.jpg");
-
-
-
+let producto1 = new producto(1, "CORTE", "Tendencia 2024", "3000", "../img/corte.jpg");
+let producto2 = new producto(2, "PEINADO", "Recogidos & Novias", "7000", "/img/peinado.jpg");
+let producto3 = new producto(3, "ALISADO", "Alisados Meth", "10000 ", "/img/alisado.jpg");
+let producto4 = new producto(4, "TINTURA", "Sin Amoniaco", "4500 ", "./img/tintura.jpg");
 
 let lista = [producto1, producto2, producto3, producto4];
 
-//carrito de compras
-const shopContent = document.getElementById("shopContent")
-const verCarrito = document.getElementById("verCarrito")
-const modalContainer = document.getElementById("modalContainer")
+let carrito = [];
 
-let carrito = []
-
-lista.forEach((product) =>{
-    let content = document.createElement("div")
-    content.className = "card"
+lista.forEach((product) => {
+    let content = document.createElement("div");
+    content.className = "card";
     content.innerHTML = `
-    <img src="${product.imagen}">
+    <img src="${product.imagen}" alt="${product.tipo}">
     <h3>${product.tipo}</h3>
-    <p>Marca: ${product.marca}
-    <p class="price"> Precio: ${product.precio}</p>
-    `
-    shopContent.appendChild(content)
+    <p>Marca: ${product.marca}</p>
+    <p class="price">Precio: ${product.precio}</p>
+    `;
+    shopContent.appendChild(content);
 
-    let comprar = document.createElement("button")
-    comprar.innerText = "comprar"
-    comprar.className= "comprar"
-    content.append(comprar)
+    let comprar = document.createElement("button");
+    comprar.innerText = "comprar";
+    comprar.className = "comprar";
+
+    content.appendChild(comprar);
 
     comprar.addEventListener("click", () => {
         carrito.push({
-
-            id:product.id,
-            img:product.img,
-            nombre:product.tipo,
-            marca:product.marca,
-            precio:product.precio
-
-        })
-        console.log(carrito)  
-    })
-})
+            id: product.id,
+            img: product.imagen,
+            nombre: product.tipo,
+            marca: product.marca,
+            precio: product.precio
+        });
+        console.log(carrito);
+    });
+});
 
 verCarrito.addEventListener("click", () => {
-    const modalContainer = document.createElement("div");
-    modalContainer.className = "modal";
-
-    const modalHeader = document.createElement("div");
+    modalContainer.innerHTML = "";
+    modalContainer.style.display = "flex";
+    const modalHeader= document.createElement("div");
     modalHeader.className = "modal-header";
-    modalHeader.innerHTML = `<h1><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shop-window" viewBox="0 0 16 16">
-    <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h12V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5m2 .5a.5.5 0 0 1 .5.5V13h8V9.5a.5.5 0 0 1 1 0V13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5a.5.5 0 0 1 .5-.5"/>
-</svg>
-</h1>`;
+    modalHeader.innerHTML =`
+    <h1 class="modal-header-tittle>Carrito.</h1>"
+    `; 
+    modalContainer.append(modalHeader);
 
-    const modalButton = document.createElement("h1");
-    modalButton.className = "modal-header-Button";  
+    const modalbutton = document.createElement("h1");
+    modalbutton.innerText = "Salir";
+    modalbutton.className = "modal-header-button";
 
-    modalHeader.appendChild(modalButton);
+    modalbutton.addEventListener("click",() =>{
+        modalContainer.style.display = "none";
+    });
 
-    modalContainer.appendChild(modalHeader);
+    modalHeader.append(modalbutton);
 
-    document.body.appendChild(modalContainer);
-});
+
+    carrito.forEach((product) => {
+    let carritoContent = document.createElement("div")
+    carritoContent.className = "modal-content"
+    carritoContent.innerHTML =`
+    <img src="${product.img}">
+    <h3>${product.tipo}</h3>
+    <p>${product.precio}</p>
+    `;
+
+    modalContainer.append(carritoContent)
+}); 
+
+    carrito.forEach((product) => {
+        let carritoContent = document.createElement("div");
+        carritoContent.className = "cart-item";
+        carritoContent.innerHTML = `
+            <img src="${product.img}">
+            <p>${product.tipo}</p>
+            <p>Marca: ${product.marca}</p>
+            <p>Precio: ${product.precio}</p>
+        `;
+
+        modalContainer.append(carritoContent);
+    });
+    
+        const total = carrito.reduce((acc, product) => acc + product.precio, 0);
+        const totalBuying = document.createElement("div");
+        totalBuying.className = "total-content"
+        totalBuying.innerHTML = `total a pagar: ${total} $ `;
+        modalContainer.append (totalBuying);
+
+        const removeButton = carritoContent.querySelector(".remove-item");
+        removeButton.addEventListener("click", () => {
+            const carritoContent = carrito.findIndex((carritoContent) => carritoContent.id === item.id);
+            if (itemIndex !== -1) {
+                carrito.splice(itemIndex, 1);
+                updateCartModal();
+            }
+        });
+
+        modalContent.appendChild(carritoContent);
+    });
+
+    
+    modalContainer.appendChild(modalContent);
+
+//function updateCartModal() {
+    // actualizar el contenido modal del carrito de compras
+    
+
+
 
 // recorrer el array list para mostrar productos
 // for (const producto of lista) {
@@ -168,46 +215,40 @@ verCarrito.addEventListener("click", () => {
 
 
 // para filtrar productos
-// function BuscarProducto () {
-//     const body = document.querySelector("body")
-//     const input = document.getElementById("BuscarProducto").value // traigo el valor del input
-//     const palabraClave = input.trim().toUpperCase()
-//     const resultado = lista.filter((producto) => producto.tipo.toUpperCase().includes(palabraClave))
-//     if(resultado.length > 0){
-//         const container = document.createElement("div")
-//         container.classList.add("container")// le agrego clase para editarla en css
+/*function BuscarProducto () {
+    const body = document.querySelector("body")
+     const input = document.getElementById("BuscarProducto").value // traigo el valor del input
+    const palabraClave = input.trim().toUpperCase()
+    const resultado = lista.filter((producto) => producto.tipo.toUpperCase().includes(palabraClave))
+    if(resultado.length > 0){
+        const container = document.createElement("div")
+        container.classList.add("container")// le agrego clase para editarla en css
 
-//         resultado.forEach((producto) => {
-//             const card = document.createElement("div")
-//             card.classList.add("card-carrito")
+        resultado.forEach((producto) => {           const card = document.createElement("div")
+        card.classList.add("card-carrito")
+        const tipo = document.createElement("h2")
+        tipo.textContent = producto.tipo
+        card.appendChild(tipo)
 
-//         const tipo = document.createElement("h2")
-//         tipo.textContent = producto.tipo
-//         card.appendChild(tipo)
+        const marca = document.createElement("p")
+        marca.textContent = producto.marca
+        card.appendChild(marca)
 
-//         const marca = document.createElement("p")
-//         marca.textContent = producto.marca
-//         card.appendChild(marca)
+        const precio = document.createElement("p")
+    precio.textContent = producto.precio
+        card.appendChild(precio)
 
-//         const tamanio = document.createElement("p")
-//         tamanio.textContent = producto.tamanio
-//         card.appendChild(tamanio)
-
-//         const precio = document.createElement("p")
-//         precio.textContent = producto.precio
-//         card.appendChild(precio)
-
-//         container.appendChild(card)
-//         })
-//         body.appendChild(container)
-//     }else{
-//         Swal.fire({
-//             icon: "error",
-//             title: "Oops...",
-//             text: "Something went wrong!",
-//             footer: '<a href="#">Why do I have this issue?</a>'
-//         });
-//     }
-// }
-// const filtrarBoton = document.getElementById("filtrar")
-// filtrarBoton.addEventListener("click", BuscarProducto)
+        container.appendChild(card)
+        })
+        body.appendChild(container)
+    }else{
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="#">Why do I have this issue?</a>'
+        });
+    }
+}
+const filtrarBoton = document.getElementById("filtrar")
+/filtrarBoton.addEventListener("click", BuscarProducto*/
